@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0A0A1A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="CMA Shorts"/>
+<meta name="description" content="CMA Foundation Paper 2 & 3 calculation shortcuts"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<title>CMA Foundation Shortcuts</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0A0A1A;color:#E8E8F0;min-height:100vh;overflow-x:hidden}
+  /* TOP NAV */
+  #app-header{background:linear-gradient(135deg,#0D1B2A,#1B2838);padding:14px 16px 0;position:sticky;top:0;z-index:100;border-bottom:1px solid #1E3050}
+  .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .app-title{font-size:18px;font-weight:800;color:#fff}
+  .app-subtitle{font-size:11px;color:#7799BB;margin-top:1px}
+  .search-bar{display:flex;align-items:center;background:#111827;border:1px solid #2A4060;border-radius:10px;padding:7px 12px;margin-bottom:10px}
+  .search-bar input{background:none;border:none;color:#E8E8F0;font-size:13px;width:100%;outline:none}
+  .search-bar input::placeholder{color:#556677}
+  /* PAPER TABS */
+  .paper-tabs{display:flex;gap:0}
+  .paper-tab{flex:1;padding:9px 8px;text-align:center;font-size:13px;font-weight:700;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:#556677;transition:all .2s}
+  .paper-tab.active{color:#6C63FF;border-bottom-color:#6C63FF}
+  .paper-tab.active.p2{color:#4A9EFF;border-bottom-color:#4A9EFF}
+  /* SECTION TABS */
+  #section-scroll{overflow-x:auto;background:#0D1420;border-bottom:1px solid #1E3050;scrollbar-width:none}
+  #section-scroll::-webkit-scrollbar{display:none}
+  #section-tabs{display:flex;width:max-content;padding:0 10px}
+  .sec-tab{padding:8px 11px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;color:#445566;transition:all .2s}
+  .sec-tab.active{border-bottom-color:var(--c);color:var(--c)}
+  /* CARDS */
+  #content{padding:12px 12px 80px;max-width:680px;margin:0 auto}
+  .section-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-top:2px}
+  .section-header h2{font-size:16px;font-weight:800}
+  .section-count{font-size:11px;color:#445566;margin-left:auto}
+  .card{background:#111827;border:1px solid #1E3050;border-radius:11px;margin-bottom:10px;overflow:hidden;border-left:3px solid var(--c)}
+  .card-head{padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .card-name{font-size:14px;font-weight:700;color:#E8E8F0;margin-bottom:3px}
+  .card-formula{font-size:11.5px;font-family:monospace;color:var(--c);font-weight:600;line-height:1.5}
+  .card-badge{font-size:9px;background:rgba(255,255,255,.07);color:var(--c);padding:2px 7px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0}
+  .card-arrow{color:#445566;font-size:13px;margin-top:2px;flex-shrink:0}
+  .card-body{border-top:1px solid #1A2A3A;padding:0 14px 13px}
+  .trick-box{background:#151F2E;border-radius:7px;padding:10px 12px;margin-top:10px;font-size:12.5px;line-height:1.7;color:#AABBCC}
+  .trick-label{color:#FFD700;font-weight:700}
+  .example-box{background:#0F1E15;border-radius:7px;padding:9px 12px;margin-top:7px;font-size:11.5px;font-family:monospace;color:#7FFF9F;line-height:1.7}
+  .ex-label{color:#AAFFAA;font-weight:700}
+  /* SEARCH RESULTS */
+  .result-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+  .no-results{text-align:center;color:#445566;margin-top:60px;font-size:14px}
+  /* WEIGHTAGE BAR */
+  .wt-bar{display:flex;align-items:center;gap:8px;padding:7px 16px;background:#0D1420;border-bottom:1px solid #1A2A3A;font-size:11px}
+  .wt-track{flex:1;height:5px;background:#1A2A3A;border-radius:3px;overflow:hidden;display:flex}
+  .wt-fin{height:100%;background:#4A9EFF;border-radius:3px 0 0 3px}
+  .wt-cost{height:100%;background:#1ABC9C}
+  /* HOME SCREEN */
+  #home{padding:20px 16px 80px;max-width:680px;margin:0 auto}
+  .home-hero{background:linear-gradient(135deg,#0D1B2A,#1B2838);border:1px solid #1E3050;border-radius:16px;padding:20px;margin-bottom:20px;text-align:center}
+  .home-hero h2{font-size:20px;font-weight:800;color:#fff;margin-bottom:6px}
+  .home-hero p{font-size:12px;color:#7799BB;line-height:1.6}
+  .home-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  .home-card{background:#111827;border:1px solid #1E3050;border-radius:12px;padding:16px;cursor:pointer;transition:transform .15s;border-top:3px solid var(--c)}
+  .home-card:active{transform:scale(.97)}
+  .home-card-emoji{font-size:28px;margin-bottom:8px}
+  .home-card-title{font-size:13px;font-weight:800;color:#E8E8F0;margin-bottom:3px}
+  .home-card-sub{font-size:11px;color:#556677;line-height:1.4}
+  .home-tip{background:#151F2E;border:1px solid #1E3050;border-radius:10px;padding:14px 16px}
+  .home-tip-label{font-size:10px;color:#FFD700;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .home-tip-text{font-size:12px;color:#AABBCC;line-height:1.6}
+  /* BOTTOM NAV */
+  #bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0D1420;border-top:1px solid #1E3050;display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+  .nav-btn{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;cursor:pointer;color:#445566;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;transition:color .2s}
+  .nav-btn.active{color:#6C63FF}
+  .nav-icon{font-size:20px;line-height:1}
+  /* INSTALL BANNER */
+  #install-banner{display:none;position:fixed;bottom:60px;left:12px;right:12px;background:linear-gradient(135deg,#1B2838,#1E3050);border:1px solid #3A5070;border-radius:12px;padding:12px 14px;z-index:200;align-items:center;gap:12px}
+  #install-banner.show{display:flex}
+  .install-text{flex:1;font-size:12px;color:#AABBCC;line-height:1.5}
+  .install-text strong{color:#E8E8F0;display:block;margin-bottom:2px}
+  .install-btn{background:#6C63FF;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .install-close{background:none;border:none;color:#445566;font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div id="app-header">
+  <div class="header-top">
+    <div>
+      <div class="app-title">📚 CMA Foundation</div>
+      <div class="app-subtitle">Exam Shortcuts — Paper 2 & Paper 3</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <span style="color:#445566;margin-right:8px;font-size:14px">🔍</span>
+    <input id="search-input" type="search" placeholder="Search shortcuts... (e.g. depreciation, COGS, AP)"/>
+  </div>
+  <div class="paper-tabs" id="paper-tabs">
+    <button class="paper-tab" onclick="showHome()" id="tab-home">🏠 Home</button>
+    <button class="paper-tab" onclick="showPaper(2)" id="tab-p2">📒 Paper 2</button>
+    <button class="paper-tab p2" onclick="showPaper(3)" id="tab-p3">📐 Paper 3</button>
+  </div>
+</div>
+
+<div id="section-scroll" style="display:none">
+  <div id="section-tabs"></div>
+</div>
+<div id="wt-bar-p2" class="wt-bar" style="display:none">
+  <span style="color:#7799BB">Weightage:</span>
+  <div class="wt-track"><div class="wt-fin" style="width:70%"></div><div class="wt-cost" style="width:30%"></div></div>
+  <span style="color:#4A9EFF">70% Fin</span>
+  <span style="color:#1ABC9C">30% Cost</span>
+</div>
+
+<div id="home"></div>
+<div id="content" style="display:none"></div>
+
+<div id="install-banner">
+  <div class="install-text"><strong>📲 Install as App</strong>Tap to add to your home screen for offline use</div>
+  <button class="install-btn" id="install-btn">Install</button>
+  <button class="install-close" onclick="document.getElementById('install-banner').classList.remove('show')">✕</button>
+</div>
+
+<div id="bottom-nav">
+  <button class="nav-btn active" id="nav-home" onclick="showHome()"><span class="nav-icon">🏠</span>Home</button>
+  <button class="nav-btn" id="nav-p2" onclick="showPaper(2)"><span class="nav-icon">📒</span>Paper 2</button>
+  <button class="nav-btn" id="nav-p3" onclick="showPaper(3)"><span class="nav-icon">📐</span>Paper 3</button>
+  <button class="nav-btn" id="nav-search" onclick="focusSearch()"><span class="nav-icon">🔍</span>Search</button>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const P2 = [
+  { id:"basics", emoji:"📒", title:"Accounting Equation & Basics", color:"#4A9EFF", shortcuts:[
+    { name:"Accounting Equation", formula:"Assets = Capital + Liabilities",
+      trick:"If any 2 are given, find the 3rd by rearranging. Capital = Assets − Liabilities. Liabilities = Assets − Capital.",
+      example:"Assets=5,00,000 | Liabilities=1,80,000 → Capital = 3,20,000", examHit:"Direct MCQ every attempt" },
+    { name:"Capital vs Revenue — Quick Test", formula:"One-time benefit = Capital | Recurring = Revenue",
+      trick:"Buying machinery = Capital. Repairing machinery = Revenue. Buying land = Capital. Rent paid = Revenue. Does it last >1 year? Capital.",
+      example:"Whitewashing building = Revenue. Adding new floor = Capital.", examHit:"High frequency MCQ" },
+    { name:"Golden Rules — Debit/Credit", formula:"Real: Dr in, Cr out | Personal: Dr receiver, Cr giver | Nominal: Dr exp/losses, Cr income/gains",
+      trick:"Classify account type first (Real/Personal/Nominal), then apply the rule. Most errors come from wrong classification.",
+      example:"Cash received from Raj: Cash A/c Dr (Real–in), Raj A/c Cr (Personal–giver)", examHit:"Journal entry MCQs" },
+    { name:"Trial Balance Check", formula:"Total Debits = Total Credits",
+      trick:"If TB doesn't tally, there is a single-sided error. If it tallies, errors of commission/principle/omission may still exist.",
+      example:"TB difference of ₹500 → put in Suspense A/c temporarily", examHit:"Theory + practical MCQ" },
+  ]},
+  { id:"depreciation", emoji:"📉", title:"Depreciation", color:"#FF6B6B", shortcuts:[
+    { name:"SLM (Straight Line Method)", formula:"Dep = (Cost − Scrap) ÷ Life",
+      trick:"SLM dep is SAME every year. Book value reduces equally each year.",
+      example:"Cost=10L, Scrap=1L, Life=5yrs → Dep = 9L/5 = ₹1,80,000/yr", examHit:"Dec 2025 & every attempt" },
+    { name:"WDV (Written Down Value)", formula:"Dep = Opening BV × Rate%",
+      trick:"WDV dep DECREASES each year. Applied on reducing balance. Book value never reaches zero.",
+      example:"BV=6,40,000 at 25% → Dep=1,60,000. Next yr: 4,80,000 × 25% = 1,20,000", examHit:"Dec 2025 SLM→WDV switch Q" },
+    { name:"Book Value After n Years (SLM)", formula:"BV = Cost − (n × Annual Dep)",
+      trick:"Multiply annual dep by completed years, subtract from cost.",
+      example:"Cost=10L, Dep=1.8L/yr, after 2yrs: BV = 10L − 3.6L = ₹6,40,000 ✓", examHit:"Dec 2025 Q" },
+    { name:"SLM Rate from Life", formula:"Rate% = 100 ÷ Useful Life",
+      trick:"Life 5 yrs → SLM Rate=20%. Life 10 yrs → 10%. Life 4 yrs → 25%.",
+      example:"Machinery life 8 yrs → SLM Rate = 12.5% p.a.", examHit:"MCQ trap question" },
+  ]},
+  { id:"trading", emoji:"🛒", title:"Trading Account & COGS", color:"#F5A623", shortcuts:[
+    { name:"Cost of Goods Sold (COGS)", formula:"COGS = Opening Stock + Purchases + Direct Exp − Closing Stock",
+      trick:"ADD opening, ADD purchases, ADD direct expenses, LESS closing stock. This is the most tested formula.",
+      example:"OS=20K, Pur=1,00K, DirExp=10K, CS=30K → COGS = 1,00,000", examHit:"Core formula — every attempt" },
+    { name:"Gross Profit", formula:"GP = Net Sales − COGS",
+      trick:"Net Sales = Gross Sales − Sales Returns. Net Purchases = Gross Purchases − Purchase Returns.",
+      example:"Sales=2,00K, Returns=10K, COGS=1,00K → GP = 1,90K − 1,00K = ₹90,000", examHit:"Every attempt" },
+    { name:"GP Ratio", formula:"GP% = (GP ÷ Net Sales) × 100",
+      trick:"If GP% and Sales given, find GP → then find COGS. Reverse calculation trap.",
+      example:"Sales=5L, GP%=20% → GP=1L → COGS=4L", examHit:"Calculation MCQ" },
+    { name:"Closing Stock (when not given)", formula:"CS = OS + Purchases − COGS",
+      trick:"Rearrange the COGS formula when closing stock is asked.",
+      example:"OS=10K, Pur=90K, COGS=80K → CS = 10+90−80 = ₹20,000", examHit:"Reverse MCQ type" },
+  ]},
+  { id:"pandl", emoji:"💼", title:"P&L Account & Net Profit", color:"#2DAA6E", shortcuts:[
+    { name:"Net Profit", formula:"NP = Gross Profit + Other Income − Indirect Expenses",
+      trick:"Indirect expenses = selling, admin, financial charges. Direct exp go in Trading A/c (above GP line).",
+      example:"GP=90K, Commission=5K, Rent=20K, Salary=30K → NP = 90+5−20−30 = ₹45,000", examHit:"Numerical MCQ" },
+    { name:"Outstanding Expenses", formula:"Add to expense in P&L + Show as liability in BS",
+      trick:"Outstanding = unpaid but due. Prepaid = paid but not yet due (reverse).",
+      example:"Rent ₹12,000/yr, 1 month outstanding: Add ₹1,000 to P&L, show ₹1,000 as current liability", examHit:"Adjustment MCQ trap" },
+    { name:"Provision for Bad Debts", formula:"New provision > Old → charge diff to P&L | New < Old → credit diff to P&L",
+      trick:"Always compare new required provision with existing provision. Charge or credit only the DIFFERENCE.",
+      example:"Old prov=5K, New=8K → Charge ₹3,000 to P&L as expense", examHit:"Adjustment MCQ" },
+    { name:"Goods Taken for Personal Use", formula:"Debit Drawings | Credit Purchases",
+      trick:"Remove from purchases (reduce cost). Treated as if owner bought at cost price.",
+      example:"Goods ₹5,000 taken personally → Reduce purchases by ₹5,000 in Trading A/c", examHit:"Adjustment question" },
+  ]},
+  { id:"bs", emoji:"⚖️", title:"Balance Sheet", color:"#9B59B6", shortcuts:[
+    { name:"BS Balancing Check", formula:"Total Assets = Total Liabilities + Capital",
+      trick:"If BS doesn't balance: Did you add net profit to capital? Did you deduct drawings?",
+      example:"Opening Capital=2L, NP=50K, Drawings=20K → Closing Capital = 2,30,000", examHit:"Practical MCQ" },
+    { name:"Working Capital", formula:"WC = Current Assets − Current Liabilities",
+      trick:"CA = cash, debtors, stock, prepaid, bank. CL = creditors, outstanding exp, bank OD.",
+      example:"CA=3,00,000 | CL=1,20,000 → WC = ₹1,80,000", examHit:"Ratio/BS MCQ" },
+    { name:"Closing Stock in BS — The Trap", formula:"In Trial Balance → only in BS | Outside TB → in Trading A/c + BS",
+      trick:"If CS is in the Trial Balance, it's already adjusted — put only in BS. If given as additional info outside TB, show in Trading A/c credit AND BS asset side.",
+      example:"CS in TB: Show only in BS. CS as note: Show in both Trading A/c + BS", examHit:"Classic MCQ trap" },
+    { name:"Fixed Assets in BS", formula:"Net FA = Cost − Accumulated Depreciation",
+      trick:"Always show NET of depreciation in BS. Accumulated dep = sum of all years' dep.",
+      example:"Machinery cost=10L, Acc Dep=3.6L → Show in BS as ₹6,40,000", examHit:"BS preparation MCQ" },
+  ]},
+  { id:"brs", emoji:"🏦", title:"Bank Reconciliation (BRS)", color:"#16A085", shortcuts:[
+    { name:"BRS Starting Formula (Favourable)", formula:"PB = CB + Cheques deposited not yet credited − Cheques issued not yet presented",
+      trick:"Start with Cash Book balance. Add what bank hasn't credited yet. Deduct what hasn't been presented yet.",
+      example:"CB=10,000 | Deposited not credited=3,000 | Issued not presented=2,000 → PB = ₹11,000", examHit:"High weightage every attempt" },
+    { name:"BRS: Direct Credits by Bank", formula:"Add to CB balance (starting from CB)",
+      trick:"Interest/rent collected by bank in PB but not in CB → Add to CB to reach PB balance.",
+      example:"Rent collected directly by bank ₹2,250 → Add to Cash Book balance", examHit:"Dec 2023 Model Paper Q" },
+    { name:"BRS: Bank Charges / Direct Debits", formula:"Deduct from CB balance",
+      trick:"Bank charges reduce PB but not recorded in CB → Deduct from CB to reconcile.",
+      example:"CB=10,000, Bank charges=250 (in PB not CB) → Adjusted CB = 9,750", examHit:"BRS MCQ" },
+    { name:"Overdraft BRS (starting from PB OD)", formula:"PB OD + Uncredited deposits − Unpresented cheques = CB OD",
+      trick:"OD = liability. Signs flip compared to favourable balance. Unpresented cheques ADD to OD.",
+      example:"PB OD=5,000, Unpresented=1,000, Uncredited=2,000 → CB OD = 5+2−1 = ₹6,000", examHit:"Dec 2023 Model Paper Q" },
+  ]},
+  { id:"errors", emoji:"🔍", title:"Errors & Rectification", color:"#E67E22", shortcuts:[
+    { name:"4 Types of Errors", formula:"Omission | Commission | Principle | Compensating",
+      trick:"Omission = not recorded. Commission = wrong amount/account. Principle = capital treated as revenue. Compensating = two errors cancel.",
+      example:"Sales recorded in Purchase book = Error of Commission. Repairs debited to Machinery = Error of Principle.", examHit:"Dec 2023 Model Paper Q" },
+    { name:"Errors that Affect Trial Balance", formula:"Single-sided errors → TB won't tally",
+      trick:"If only one account posted, or wrong amount on one side → TB fails. Both sides affected equally → TB still tallies.",
+      example:"One side of entry posted = TB won't tally. Wrong amount posted same on both sides = TB tallies.", examHit:"Theory MCQ trap" },
+    { name:"Suspense Account Use", formula:"Temporary account to balance TB while errors are found",
+      trick:"Difference in TB → put in Suspense A/c. After finding all errors, Suspense A/c balance = zero.",
+      example:"TB short on debit side by ₹500 → Suspense A/c Dr ₹500", examHit:"Concept MCQ" },
+  ]},
+  { id:"nonprofit", emoji:"🏛️", title:"Non-Profit Organisations", color:"#8E44AD", shortcuts:[
+    { name:"R&P vs I&E Account", formula:"R&P = Cash Book (all receipts & payments) | I&E = P&L equivalent (only revenue, current year)",
+      trick:"R&P includes capital receipts too. I&E excludes capital items. Surplus in I&E = like Net Profit.",
+      example:"Subscription received (all years) = in R&P. Only current year subscription = in I&E", examHit:"Theory MCQ" },
+    { name:"Subscription Adjustment", formula:"I&E credit = Received − Advance + Outstanding (current year only)",
+      trick:"Add outstanding (due but not received). Deduct advance received for next year.",
+      example:"Received=50K, Outstanding=5K, Advance=3K → I&E credit = 52,000", examHit:"Numerical MCQ" },
+    { name:"Legacy & Endowment Fund", formula:"Both = Capital receipts → Balance Sheet liabilities side",
+      trick:"Legacy = gift received after death of donor. Endowment = fund given for specific purpose. Both go to BS, NOT I&E.",
+      example:"Legacy received ₹2,00,000 → Capital receipt → Balance Sheet only", examHit:"Dec 2023 Model Paper Q" },
+  ]},
+  { id:"costsheet", emoji:"🏭", title:"Cost Sheet & Costing", color:"#1ABC9C", shortcuts:[
+    { name:"Cost Sheet Layers", formula:"Prime Cost → Works Cost → Cost of Production → Total Cost",
+      trick:"Prime = DM+DL+Direct Exp. + Factory OH = Works Cost. + Admin OH = Cost of Production. + Selling OH = Total Cost.",
+      example:"DM=50K, DL=30K, DirectExp=10K → Prime=90K. +Factory OH 20K → Works Cost=1,10,000", examHit:"Core structure" },
+    { name:"Process Costing: Cost per Unit", formula:"Cost per unit = Net Cost ÷ Effective Output",
+      trick:"Net Cost = Total input cost − Scrap value of normal loss. Effective output = normal expected output.",
+      example:"10,000kg @₹20=2,00,000. Normal loss 500kg @₹5 scrap=2,500. Net=1,97,500 ÷ 9,500 = ₹20.79/kg", examHit:"Dec 2025 Q" },
+    { name:"Normal vs Abnormal Loss", formula:"Normal = expected loss (absorbed in cost) | Abnormal = excess loss (separate P&L charge)",
+      trick:"Normal loss raises cost per unit of good output. Abnormal loss is valued at standard cost per unit, deducted separately.",
+      example:"Expected 5%, Actual 7% → 2% = Abnormal Loss → Abnormal Loss A/c Dr", examHit:"Process costing MCQ" },
+    { name:"Fixed vs Variable Cost — The Trap", formula:"Fixed cost per unit CHANGES | Variable cost per unit STAYS SAME",
+      trick:"Total fixed cost is constant. But fixed cost per unit goes down as output rises. Variable cost per unit never changes. This distinction trips most students.",
+      example:"Rent=₹10,000 at 100 units → ₹100/unit. At 500 units → ₹20/unit. But per unit variable cost stays ₹X always.", examHit:"Dec 2023 Model Paper Q" },
+  ]},
+  { id:"ratios", emoji:"📊", title:"Key Accounting Ratios", color:"#2980B9", shortcuts:[
+    { name:"Current Ratio", formula:"Current Assets ÷ Current Liabilities | Ideal = 2:1",
+      trick:"Quick Ratio excludes stock: (CA − Stock) ÷ CL. Ideal Quick Ratio = 1:1.",
+      example:"CA=4,00,000, CL=2,00,000 → Current Ratio = 2:1 ✓", examHit:"Ratio MCQ" },
+    { name:"Gross Profit Ratio", formula:"(GP ÷ Net Sales) × 100",
+      trick:"If GP% = 25%, COGS% = 75%. Use to back-calculate any missing figure.",
+      example:"Sales=8,00,000, GP%=25% → GP=2,00,000, COGS=6,00,000", examHit:"Ratio calculation MCQ" },
+    { name:"Stock Turnover Ratio", formula:"COGS ÷ Average Stock | Avg Stock = (OS+CS)÷2",
+      trick:"Higher STR = faster stock movement = efficient. Lower = slow-moving stock.",
+      example:"COGS=6,00,000, OS=40K, CS=60K → Avg=50K → STR = 12 times", examHit:"Efficiency ratio MCQ" },
+    { name:"Debtors Collection Period", formula:"(Avg Debtors ÷ Net Credit Sales) × 365",
+      trick:"Lower days = debtors paying faster = good. Higher = credit risk.",
+      example:"Sales=7,30,000, Avg Debtors=1,00,000 → 1,00,000/7,30,000×365 = 50 days", examHit:"Ratio MCQ" },
+  ]},
+];
+
+const P3 = [
+  { id:"ratio", emoji:"⚖️", title:"Ratio & Proportion", color:"#6C63FF", shortcuts:[
+    { name:"Mean Proportional", formula:"√(a × b)",
+      trick:"Mean prop between a and b = √(ab). Just multiply and square root.",
+      example:"Between 1.4 & 5.6 → √(1.4×5.6) = √7.84 = 2.8 ✓", examHit:"Dec 2025 Q1" },
+    { name:"Third Proportional", formula:"b² ÷ a",
+      trick:"If a:b = b:x → x = b²/a. Square the middle term, divide by first.",
+      example:"2:4 = 4:x → x = 16/2 = 8", examHit:"Frequently tested" },
+    { name:"Inverse vs Direct Ratio", formula:"Direct: ↑↑ | Inverse: ↑↓",
+      trick:"Speed↑ → Time↓ (inverse). Price↑ → Cost↑ (direct). Label it first, then solve in 1 line.",
+      example:"Bike takes 2× time of cycle → bike speed = ½ cycle → ratio 1:2", examHit:"Dec 2025 speed Q" },
+  ]},
+  { id:"si_ci", emoji:"💰", title:"Simple & Compound Interest", color:"#E05A5A", shortcuts:[
+    { name:"SI Doubling Shortcut", formula:"R = 100 ÷ T",
+      trick:"If money doubles at SI → Interest = Principal = 100%. Rate = 100/T.",
+      example:"Doubles in 5 yrs → R = 100/5 = 20% p.a. ✓", examHit:"Dec 2025 Q5" },
+    { name:"SI Tripling Shortcut", formula:"R = 200 ÷ T",
+      trick:"Triples → Interest = 2× Principal = 200%. Rate = 200/T.",
+      example:"Triples in 10 yrs → R = 200/10 = 20%", examHit:"Common variant" },
+    { name:"CI 2-Year Shortcut", formula:"CI = SI + (SI × r/100)",
+      trick:"For 2 years: CI = SI + extra interest on 1st year's interest. Add r% on first year's SI.",
+      example:"P=1000, r=10%, 2yr: SI=200, Extra=10% of 100=10. CI=210", examHit:"Highly repeated" },
+    { name:"CI − SI Difference (2 years)", formula:"Diff = P × (r/100)²",
+      trick:"Memorise directly. CI always > SI for same P, r, t.",
+      example:"P=10000, r=5%: Diff = 10000 × 0.0025 = ₹25", examHit:"MCQ trap question" },
+  ]},
+  { id:"ap_gp", emoji:"📐", title:"AP & GP Series", color:"#2DAA6E", shortcuts:[
+    { name:"nth Term of AP", formula:"Tn = a + (n−1)d",
+      trick:"Count gaps from 1st to nth = (n−1). Multiply by d, add a.",
+      example:"-2,-5,-8… 9th term: -2 + 8×(−3) = −2−24 = −26 ✓", examHit:"Dec 2025 Q2" },
+    { name:"Sum of AP", formula:"Sn = n/2 × (first + last)  OR  n/2 × [2a + (n−1)d]",
+      trick:"If first and last term known: use first formula. Otherwise use second.",
+      example:"2+4+6+8+10 (n=5): 5/2×(2+10) = 5×6 = 30 ✓", examHit:"Dec 2025 Q4" },
+    { name:"nth Term of GP", formula:"Tn = a × r^(n−1)",
+      trick:"Multiply 'a' by r, (n-1) times. For fractions, keep dividing.",
+      example:"a=4, r=1/2, 5th term: 4×(1/2)⁴ = 4/16 = 1/4 ✓", examHit:"Dec 2025 Q3" },
+    { name:"AM ≥ GM Rule", formula:"AM = (a+b)/2 | GM = √(ab) | AM ≥ GM always",
+      trick:"AM equals GM only when a = b. Quick check for option elimination.",
+      example:"a=4,b=9: AM=6.5, GM=6. AM > GM ✓", examHit:"Theory MCQ" },
+  ]},
+  { id:"log", emoji:"🔢", title:"Logarithms & Indices", color:"#F5A623", shortcuts:[
+    { name:"Log Breakdown", formula:"log(aᵐ × bⁿ) = m·log a + n·log b",
+      trick:"Factorize the number into primes first, then split using log rules.",
+      example:"log 144: 144=2⁴×3² → 4log2 + 2log3 ✓", examHit:"Dec 2025 Q8" },
+    { name:"Index Ratio Shortcut", formula:"Convert all to same base → equate powers → find ratio",
+      trick:"Convert all numbers to base 10. Set powers equal, then find ratio.",
+      example:"(100)ˣ=(1000)ʸ=10ᶻ → 2x=3y=z=6 → x:y:z=3:2:6 ✓", examHit:"Dec 2025 Q7" },
+    { name:"Negative Index Rule", formula:"a⁻ⁿ = 1/aⁿ",
+      trick:"Write right side as negative power of same base, then equate exponents.",
+      example:"3ˣ=1/243=3⁻⁵ → x=−5 ✓", examHit:"Dec 2025 Q6" },
+  ]},
+  { id:"perm", emoji:"🔀", title:"Permutation & Combination", color:"#9B59B6", shortcuts:[
+    { name:"nPr Quick Solve", formula:"n×(n−1)×...×(n−r+1)  [r terms]",
+      trick:"Write r numbers starting from n going down. No full factorial needed.",
+      example:"⁹P₃ = 9×8×7 = 504 ✓ (3 numbers from 9 downward)", examHit:"Dec 2025 Q13" },
+    { name:"nCr with Fixed Member", formula:"Fix them, then choose (r−1) from (n−1)",
+      trick:"If 1 person MUST be selected: lock them in, choose rest from remaining.",
+      example:"5 from 11, 1 fixed: ¹⁰C₄ = 10×9×8×7 / 4×3×2×1 = 210 ✓", examHit:"Dec 2025 Q10" },
+    { name:"Subsets Shortcut", formula:"Total = 2ⁿ | Proper = 2ⁿ − 1",
+      trick:"Proper subsets = all subsets minus the full set itself.",
+      example:"{a,e,i,o,u}: 2⁵=32, proper=31 ✓", examHit:"Dec 2025 Q11" },
+    { name:"Factorial Simplification", formula:"0!=1, 1!=1, n!=n×(n−1)!",
+      trick:"0!=1 always. Expand only what's needed, don't multiply all the way.",
+      example:"(2!+3!)×0! = (2+6)×1 = 8 ✓", examHit:"Dec 2025 Q9" },
+  ]},
+  { id:"calculus", emoji:"📈", title:"Basic Calculus", color:"#16A085", shortcuts:[
+    { name:"Power Rule (Differentiation)", formula:"d/dx(xⁿ) = n·xⁿ⁻¹",
+      trick:"Bring power down as coefficient, reduce power by 1. Set dy/dx=0 to find turning points.",
+      example:"y=x³−3x → dy/dx=3x²−3=0 → x²=1 → x=±1 ✓", examHit:"Dec 2025 Q12" },
+    { name:"Marginal Cost / Revenue", formula:"MC = d(TC)/dq | MR = d(TR)/dq",
+      trick:"Differentiate total cost or total revenue with respect to quantity. That's it.",
+      example:"TC=q²+5q+10 → MC=2q+5. At q=3: MC=₹11", examHit:"Applied calculus MCQ" },
+  ]},
+  { id:"stats", emoji:"📊", title:"Central Tendency", color:"#2980B9", shortcuts:[
+    { name:"Geometric Mean (3 values)", formula:"GM = (a×b×c)^(1/3)",
+      trick:"Multiply all values, take cube root. Shortcut: if product is a perfect cube, easy answer.",
+      example:"GM of 4,6,9: (4×6×9)^⅓ = (216)^⅓ = 6 ✓", examHit:"Dec 2025 Q" },
+    { name:"Mode from Frequency Table", formula:"Value with highest frequency",
+      trick:"Just find the class/value with maximum frequency. No formula for ungrouped data.",
+      example:"Freq: 5,8,12,6,3 → Mode = value against 12", examHit:"Dec 2025 Q26" },
+    { name:"Median Position", formula:"(n+1)/2 th term (odd n) | Average of n/2 and n/2+1 th (even n)",
+      trick:"Always SORT data first. Then find position.",
+      example:"n=7 (sorted): median = 4th value", examHit:"Repeated every attempt" },
+    { name:"Mean of Index Numbers", formula:"Sum all relatives ÷ count",
+      trick:"Calculate each relative (current/base × 100), add all, divide by n.",
+      example:"Relatives: 125,100,150,140,110,112.5 → Sum=737.5 → ÷6 ≈ 122.9", examHit:"Dec 2025 Q" },
+  ]},
+  { id:"dispersion", emoji:"📉", title:"Dispersion", color:"#C0392B", shortcuts:[
+    { name:"SD Assumed Mean Method", formula:"SD = h × √[Σfd²/n − (Σfd/n)²]",
+      trick:"Pick assumed mean A = midpoint of middle class. Reduces huge numbers to small ones. Then use formula.",
+      example:"Set A = midpoint. Calculate d=(x−A)/h. Make fd and fd² columns. Apply formula.", examHit:"High weightage" },
+    { name:"Variance = SD²", formula:"Var = SD²",
+      trick:"If SD=4, Variance=16. If Variance=25, SD=5. Always.",
+      example:"SD=6 → Var=36. Var=49 → SD=7", examHit:"MCQ trap: they give one, ask other" },
+    { name:"Coefficient of Variation", formula:"CV = (SD ÷ Mean) × 100",
+      trick:"Lower CV = more consistent/stable. Use to compare two datasets.",
+      example:"CV₁=20%, CV₂=35% → Dataset 1 is more consistent", examHit:"Comparison MCQs" },
+    { name:"Range", formula:"Max − Min",
+      trick:"Simplest measure of dispersion. Just spot largest and smallest.",
+      example:"Data: 3,7,2,9,5 → Range = 9−2 = 7", examHit:"Easy 2-mark questions" },
+  ]},
+  { id:"probability", emoji:"🎲", title:"Probability", color:"#8E44AD", shortcuts:[
+    { name:"Classical Probability", formula:"P(E) = Favourable outcomes ÷ Total outcomes",
+      trick:"Always reduce the fraction. Check if events are mutually exclusive or independent first.",
+      example:"Card drawn red face: 6/52 = 3/26", examHit:"Every attempt" },
+    { name:"Complement Rule — At Least One", formula:"P(at least 1) = 1 − P(none)",
+      trick:"'At least one' problems: use complement to save 2+ minutes.",
+      example:"P(at least 1 head in 3 tosses) = 1 − (1/2)³ = 7/8", examHit:"Shortcut saves 2 mins" },
+    { name:"Independent Events", formula:"P(A∩B) = P(A) × P(B)",
+      trick:"Two separate unrelated events → simply multiply.",
+      example:"P(Head) × P(6) = 1/2 × 1/6 = 1/12", examHit:"Standard MCQ" },
+    { name:"Pie Chart Angle", formula:"(Value ÷ Total) × 360°",
+      trick:"Find proportion as fraction, then multiply by 360.",
+      example:"Source C=240, Total=720 → 240/720=1/3 → angle=120° ✓", examHit:"Dec 2025 Q21" },
+  ]},
+  { id:"annuity", emoji:"🏦", title:"Annuity & Present Value", color:"#1ABC9C", shortcuts:[
+    { name:"Present Value of Annuity", formula:"PV = A × PVAF(r,n) | PVAF = [1−(1+r)⁻ⁿ] ÷ r",
+      trick:"Memorise PVAF values: 5%/4yrs≈3.546, 10%/5yrs≈3.791. Multiply annual amount by PVAF.",
+      example:"₹1000 for 4yrs at 5%: 1000×3.546 = ₹3,546 (approx 3555) ✓", examHit:"Dec 2025 Q14" },
+    { name:"Future Value of Annuity", formula:"FV = A × [(1+r)ⁿ − 1] ÷ r",
+      trick:"For equal annual deposits: use FVAF or compound each year separately.",
+      example:"₹500/yr for 3yrs at 10%: 500×[(1.1)³−1]/0.1 = 500×3.31 = ₹1,655", examHit:"Occasional question" },
+  ]},
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+
+let currentPaper = null; // null = home, 2 or 3
+let currentSection = null;
+let expandedCards = new Set();
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+
+function showHome() {
+  currentPaper = null;
+  currentSection = null;
+  expandedCards.clear();
+  document.getElementById('search-input').value = '';
+  document.getElementById('section-scroll').style.display = 'none';
+  document.getElementById('wt-bar-p2').style.display = 'none';
+  document.getElementById('content').style.display = 'none';
+  document.getElementById('home').style.display = 'block';
+  setActiveTab('tab-home', 'nav-home');
+  renderHome();
+}
+
+function renderHome() {
+  const el = document.getElementById('home');
+  const totalShortcuts = P2.reduce((s,sec)=>s+sec.shortcuts.length,0) + P3.reduce((s,sec)=>s+sec.shortcuts.length,0);
+  el.innerHTML = `
+    <div class="home-hero">
+      <div style="font-size:48px;margin-bottom:12px">📚</div>
+      <h2>CMA Foundation Shortcuts</h2>
+      <p>Paper 2 (Financial & Cost Accounting) + Paper 3 (Maths & Statistics)<br/>
+      <strong style="color:#4A9EFF">${totalShortcuts} shortcuts</strong> from actual exam questions</p>
+    </div>
+    <div class="home-cards">
+      <div class="home-card" style="--c:#4A9EFF" onclick="showPaper(2)">
+        <div class="home-card-emoji">📒</div>
+        <div class="home-card-title">Paper 2</div>
+        <div class="home-card-sub">Financial & Cost Accounting<br/>${P2.reduce((s,sec)=>s+sec.shortcuts.length,0)} shortcuts • ${P2.length} topics</div>
+      </div>
+      <div class="home-card" style="--c:#6C63FF" onclick="showPaper(3)">
+        <div class="home-card-emoji">📐</div>
+        <div class="home-card-title">Paper 3</div>
+        <div class="home-card-sub">Maths & Statistics<br/>${P3.reduce((s,sec)=>s+sec.shortcuts.length,0)} shortcuts • ${P3.length} topics</div>
+      </div>
+    </div>
+    <div class="home-tip">
+      <div class="home-tip-label">⚡ Exam Day Tip — June 14</div>
+      <div class="home-tip-text">
+        Paper 2: Focus on Depreciation (SLM/WDV), COGS, BRS, and Adjustments — these account for 40%+ marks.<br/><br/>
+        Paper 3: AP/GP nth term, SI/CI doubling shortcuts, Permutations, and SD using assumed mean are the highest-frequency numerical questions.
+      </div>
+    </div>
+  `;
+}
+
+function showPaper(p) {
+  currentPaper = p;
+  const data = p === 2 ? P2 : P3;
+  currentSection = data[0].id;
+  expandedCards.clear();
+  document.getElementById('search-input').value = '';
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  document.getElementById('section-scroll').style.display = 'block';
+  document.getElementById('wt-bar-p2').style.display = p === 2 ? 'flex' : 'none';
+  setActiveTab(p === 2 ? 'tab-p2' : 'tab-p3', p === 2 ? 'nav-p2' : 'nav-p3');
+  renderSectionTabs();
+  renderContent();
+}
+
+function renderSectionTabs() {
+  const data = currentPaper === 2 ? P2 : P3;
+  const container = document.getElementById('section-tabs');
+  container.innerHTML = data.map(s => `
+    <button class="sec-tab ${s.id === currentSection ? 'active' : ''}"
+      style="--c:${s.color}"
+      onclick="selectSection('${s.id}')">${s.emoji} ${s.title}</button>
+  `).join('');
+}
+
+function selectSection(id) {
+  currentSection = id;
+  expandedCards.clear();
+  renderSectionTabs();
+  renderContent();
+  // scroll section tab into view
+  const tabs = document.querySelectorAll('.sec-tab');
+  tabs.forEach(t => { if(t.textContent.trim().includes(id.substring(0,3))) t.scrollIntoView({inline:'center',behavior:'smooth'}); });
+  document.getElementById('content').scrollTo(0,0);
+  window.scrollTo(0,0);
+}
+
+function renderContent() {
+  const data = currentPaper === 2 ? P2 : P3;
+  const searchVal = document.getElementById('search-input').value.trim().toLowerCase();
+  const container = document.getElementById('content');
+
+  if (searchVal) {
+    const results = [];
+    (currentPaper === 2 ? [...P2,...P3] : [...P3,...P2]).forEach(sec => {
+      sec.shortcuts.forEach((sh,i) => {
+        if (sh.name.toLowerCase().includes(searchVal) ||
+            sh.trick.toLowerCase().includes(searchVal) ||
+            sh.formula.toLowerCase().includes(searchVal) ||
+            sh.example.toLowerCase().includes(searchVal)) {
+          results.push({...sh, sectionTitle: sec.title, sectionEmoji: sec.emoji, color: sec.color, secId: sec.id, idx: i});
+        }
+      });
+    });
+    if (results.length === 0) {
+      container.innerHTML = `<div class="no-results">No results for "${searchVal}"<br/><span style="font-size:12px;margin-top:8px;display:block">Try: depreciation, BRS, COGS, AP, SI, SD</span></div>`;
+    } else {
+      container.innerHTML = `<div style="font-size:12px;color:#7799BB;margin-bottom:12px">${results.length} result${results.length>1?'s':''} for "${searchVal}"</div>` +
+        results.map((sh,i) => cardHTML(sh, sh.color, sh.sectionTitle, `s${i}`, true)).join('');
+    }
+    return;
+  }
+
+  const sec = data.find(s => s.id === currentSection);
+  if (!sec) return;
+  container.innerHTML = `
+    <div class="section-header">
+      <span style="font-size:22px">${sec.emoji}</span>
+      <h2 style="color:${sec.color}">${sec.title}</h2>
+      <span class="section-count">${sec.shortcuts.length} shortcuts</span>
+    </div>
+    ${sec.shortcuts.map((sh,i) => cardHTML(sh, sec.color, null, `${sec.id}_${i}`, false)).join('')}
+  `;
+}
+
+function cardHTML(sh, color, sectionLabel, cardId, showSection) {
+  const isOpen = expandedCards.has(cardId);
+  return `
+    <div class="card" style="--c:${color}" id="card-${cardId}">
+      <div class="card-head" onclick="toggleCard('${cardId}')">
+        <div style="flex:1;min-width:0">
+          ${showSection ? `<div class="result-section" style="color:${color}">${sectionLabel}</div>` : ''}
+          <div class="card-name">${sh.name}</div>
+          <div class="card-formula">${sh.formula}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;margin-left:8px">
+          <span class="card-badge">${sh.examHit}</span>
+          <span class="card-arrow">${isOpen ? '▲' : '▼'}</span>
+        </div>
+      </div>
+      ${isOpen ? `
+      <div class="card-body">
+        <div class="trick-box"><span class="trick-label">⚡ Trick: </span>${sh.trick}</div>
+        <div class="example-box"><span class="ex-label">✓ Example: </span>${sh.example}</div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function toggleCard(cardId) {
+  if (expandedCards.has(cardId)) expandedCards.delete(cardId);
+  else expandedCards.add(cardId);
+  renderContent();
+  // scroll card into view
+  setTimeout(() => {
+    const el = document.getElementById(`card-${cardId}`);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 50);
+}
+
+function setActiveTab(tabId, navId) {
+  document.querySelectorAll('.paper-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
+  const t = document.getElementById(tabId);
+  const n = document.getElementById(navId);
+  if (t) t.classList.add('active');
+  if (n) n.classList.add('active');
+}
+
+function focusSearch() {
+  const input = document.getElementById('search-input');
+  input.focus();
+  if (currentPaper === null) showPaper(2);
+  window.scrollTo(0, 0);
+}
+
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
+
+document.getElementById('search-input').addEventListener('input', function() {
+  if (currentPaper === null) {
+    currentPaper = 2;
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('section-scroll').style.display = 'none';
+    document.getElementById('wt-bar-p2').style.display = 'none';
+  }
+  renderContent();
+});
+
+// ─── PWA INSTALL ─────────────────────────────────────────────────────────────
+
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => document.getElementById('install-banner').classList.add('show'), 2000);
+});
+
+document.getElementById('install-btn').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const result = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('install-banner').classList.remove('show');
+  }
+});
+
+// iOS install hint
+const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+if (isIOS && !isStandalone) {
+  setTimeout(() => {
+    const banner = document.getElementById('install-banner');
+    banner.querySelector('.install-text').innerHTML = '<strong>📲 Install on iPhone</strong>Tap the Share button → "Add to Home Screen"';
+    banner.querySelector('#install-btn').style.display = 'none';
+    banner.classList.add('show');
+  }, 2000);
+}
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+showHome();
+</script>
+</body>
+</html>
